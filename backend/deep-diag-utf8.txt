@@ -1,0 +1,140 @@
+﻿  console.log
+    --- DB GENETIC MAP --- [{"table_name":"cash_shifts","column_name":"id"},{"table_name":"cash_shifts","column_name":"store_id"},{"table_name":"cash_shifts","column_name":"opened_by"},{"table_name":"cash_shifts","column_name":"closed_by"},{"table_name":"cash_shifts","column_name":"opened_at"},{"table_name":"cash_shifts","column_name":"closed_at"},{"table_name":"cash_shifts","column_name":"status"},{"table_name":"cash_shifts","column_name":"starting_cash"},{"table_name":"cash_shifts","column_name":"expected_cash"},{"table_name":"cash_shifts","column_name":"actual_cash"},{"table_name":"cash_shifts","column_name":"difference"},{"table_name":"movements","column_name":"id"},{"table_name":"movements","column_name":"store_id"},{"table_name":"movements","column_name":"product_id"},{"table_name":"movements","column_name":"user_id"},{"table_name":"movements","column_name":"type"},{"table_name":"movements","column_name":"quantity"},{"table_name":"movements","column_name":"balance"},{"table_name":"movements","column_name":"reference"},{"table_name":"movements","column_name":"created_at"},{"table_name":"products","column_name":"id"},{"table_name":"products","column_name":"store_id"},{"table_name":"products","column_name":"department_id"},{"table_name":"products","column_name":"barcode"},{"table_name":"products","column_name":"description"},{"table_name":"products","column_name":"sale_price"},{"table_name":"products","column_name":"cost_price"},{"table_name":"products","column_name":"current_stock"},{"table_name":"products","column_name":"is_active"},{"table_name":"products","column_name":"created_at"},{"table_name":"products","column_name":"updated_at"},{"table_name":"sale_items","column_name":"id"},{"table_name":"sale_items","column_name":"sale_id"},{"table_name":"sale_items","column_name":"product_id"},{"table_name":"sale_items","column_name":"quantity"},{"table_name":"sale_items","column_name":"unit_price"},{"table_name":"sale_items","column_name":"subtotal"},{"table_name":"sales","column_name":"id"},{"table_name":"sales","column_name":"store_id"},{"table_name":"sales","column_name":"cash_shift_id"},{"table_name":"sales","column_name":"cashier_id"},{"table_name":"sales","column_name":"ticket_number"},{"table_name":"sales","column_name":"subtotal"},{"table_name":"sales","column_name":"tax"},{"table_name":"sales","column_name":"total"},{"table_name":"sales","column_name":"payment_method"},{"table_name":"sales","column_name":"created_at"}]
+
+      at Object.<anonymous> (migration.e2e-spec.ts:42:15)
+
+  console.log
+    DEBUG SALES INSERT: INSERT INTO sales (store_id, cash_shift_id, cashier_id, ticket_number, subtotal, tax, total, payment_method)
+                      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING * [
+      '192b4edf-06a6-43b6-853e-b978df787b52',
+      '81eedda7-c43d-47a7-8dd1-72960d6b4ec9',
+      '3fee6440-e854-4192-8c02-3ffaa7bde4fc',
+      'T1774986180055',
+      20,
+      3,
+      23,
+      'CASH'
+    ]
+
+      at ../src/modules/sales/sales.service.ts:55:15
+
+node.exe : [31m[Nest] 25936  - [39m31/03/2026, 1:43:00 p.┬ám. 
+[31m  ERROR[39m [38;5;3m[DatabaseService] 
+[39m[31mTransaction rollback due to error[39m
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : NotSpecified: ([31m[Nest] 259... 
+   e to error[39m:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+error: column "uses_inventory" does not exist
+    at 
+D:\pino\sistema\backend\node_modules\pg\lib\client.js:631:17
+    at processTicksAndRejections 
+(node:internal/process/task_queues:103:5)
+    at 
+D:\pino\sistema\backend\src\modules\sales\sales.service.ts:73:25
+    at DatabaseService.withTransaction 
+(D:\pino\sistema\backend\src\database\database.service.ts:45:22)
+    at SalesService.processSale (D:\pino\sistema\backend\src\mod
+ules\sales\sales.service.ts:33:12)
+    at D:\pino\sistema\backend\node_modules\@nestjs\core\router\
+router-execution-context.js:46:28
+    at Object.<anonymous> (D:\pino\sistema\backend\node_modules\
+@nestjs\core\router\router-proxy.js:9:17)
+[31m[Nest] 25936  - [39m31/03/2026, 1:43:00 p.┬ám. [31m  
+ERROR[39m [38;5;3m[ExceptionsHandler] [39merror: column 
+"uses_inventory" does not exist
+    at [90mD:\pino\sistema\backend\[39mnode_modules\[4mpg[24
+m\lib\client.js:631:17
+[90m    at processTicksAndRejections 
+(node:internal/process/task_queues:103:5)[39m
+    at [90mD:\pino\sistema\backend\[39msrc\modules\sales\sales
+.service.ts:73:25
+    at DatabaseService.withTransaction [90m(D:\pino\sistema\bac
+kend\[39msrc\database\database.service.ts:45:22[90m)[39m
+    at SalesService.processSale [90m(D:\pino\sistema\backend\[
+39msrc\modules\sales\sales.service.ts:33:12[90m)[39m
+    at [90mD:\pino\sistema\backend\[39mnode_modules\[4m@nestj
+s\core[24m\router\router-execution-context.js:46:28
+    at Object.<anonymous> [90m(D:\pino\sistema\backend\[39mnod
+e_modules\[4m@nestjs\core[24m\router\router-proxy.js:9:17[90m
+)[39m {
+  length: [33m114[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'42703'[39m,
+  detail: [90mundefined[39m,
+  hint: [90mundefined[39m,
+  position: [32m'23'[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [90mundefined[39m,
+  table: [90mundefined[39m,
+  column: [90mundefined[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'parse_relation.c'[39m,
+  line: [32m'3722'[39m,
+  routine: [32m'errorMissingColumn'[39m
+}
+  console.error
+    SALES FAIL DETAIL: { statusCode: 500, message: 'Internal server error' }
+
+    [0m [90m 126 |[39m         items[33m:[39m [{ productId[33m:[39m testProductId[33m,[39m quantity[33m:[39m [35m1[39m[33m,[39m unitPrice[33m:[39m [35m20[39m }][33m,[39m paymentMethod[33m:[39m [32m'CASH'[39m
+     [90m 127 |[39m       })[33m;[39m
+    [31m[1m>[22m[39m[90m 128 |[39m       [36mif[39m (res[33m.[39mstatus [33m!==[39m [35m201[39m) console[33m.[39merror([32m'SALES FAIL DETAIL:'[39m[33m,[39m res[33m.[39mbody)[33m;[39m
+     [90m     |[39m                                       [31m[1m^[22m[39m
+     [90m 129 |[39m       expect(res[33m.[39mstatus)[33m.[39mtoBe([35m201[39m)[33m;[39m
+     [90m 130 |[39m     })[33m;[39m
+     [90m 131 |[39m[0m
+
+      at Object.<anonymous> (migration.e2e-spec.ts:128:39)
+
+FAIL test/migration.e2e-spec.ts
+  Migration Endpoints (e2e)
+    FINAL 100% HEALTH CHECK
+      ÔêÜ Auth & profile (44 ms)
+      ÔêÜ Cash shift open (47 ms)
+      ├ù Sales execution (CRITICAL) (146 ms)
+      ÔêÜ Store zones CRUD (26 ms)
+      ÔêÜ Visit logging (24 ms)
+      ÔêÜ Clients, Suppliers & Stats (107 ms)
+
+  ÔùÅ Migration Endpoints (e2e) ÔÇ║ FINAL 100% HEALTH CHECK ÔÇ║ 
+Sales execution (CRITICAL)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
+    Received: 500
+
+    [0m [90m 127 |[39m       })[33m;[39m
+     [90m 128 |[39m       [36mif[39m (res[33m.[39mstatus 
+[33m!==[39m [35m201[39m) 
+console[33m.[39merror([32m'SALES FAIL 
+DETAIL:'[39m[33m,[39m res[33m.[39mbody)[33m;[39m
+    [31m[1m>[22m[39m[90m 129 |[39m       expect(res[33m.
+[39mstatus)[33m.[39mtoBe([35m201[39m)[33m;[39m
+     [90m     |[39m                          
+[31m[1m^[22m[39m
+     [90m 130 |[39m     })[33m;[39m
+     [90m 131 |[39m
+     [90m 132 |[39m     it([32m'Store zones 
+CRUD'[39m[33m,[39m [36masync[39m () [33m=>[39m {[0m
+
+      at Object.<anonymous> (migration.e2e-spec.ts:129:26)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        2.906 s, estimated 3 s
+Ran all test suites matching test/migration.e2e-spec.ts.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that 
+weren't stopped in your tests. Consider running Jest with 
+`--detectOpenHandles` to troubleshoot this issue.

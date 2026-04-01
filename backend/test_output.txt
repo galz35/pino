@@ -1,0 +1,29 @@
+﻿node.exe : PASS test/auth-sync.e2e-spec.ts
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : NotSpecified: (PASS test/auth-syn 
+   c.e2e-spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Auth & Sync Flow (e2e)
+    Authentication
+      ÔêÜ /api/auth/register (POST) - Success (265 ms)
+      ÔêÜ /api/auth/login (POST) - Success & Get Token (118 ms)
+      ÔêÜ /api/auth/me (GET) - Protected Route (46 ms)
+    Core Data Accessibility
+      ÔêÜ /api/products (GET) - List products for offline sync 
+(23 ms)
+      ÔêÜ /api/clients (GET) - List clients for offline sync 
+(24 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        3.168 s
+Ran all test suites matching test/auth-sync.e2e-spec.ts.
+Force exiting Jest: Have you considered using 
+`--detectOpenHandles` to detect async operations that kept 
+running after all tests finished?

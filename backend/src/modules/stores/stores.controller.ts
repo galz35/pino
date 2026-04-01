@@ -1,0 +1,55 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { StoresService } from './stores.service';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
+// Entities removidas para pure pg
+@ApiTags('Stores')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Controller('stores')
+export class StoresController {
+  constructor(private readonly storesService: StoresService) {}
+
+  @Post()
+  @Roles('master-admin', 'chain-admin')
+  @ApiOperation({ summary: 'Requisitar creación de tienda (Master/Chain Admin)' })
+  create(@Body() dto: any) {
+    return this.storesService.create(dto);
+  }
+
+  @Get()
+  @ApiQuery({ name: 'chainId', required: false })
+  @ApiOperation({ summary: 'Listar tiendas (Filtrable por cadena)' })
+  findAll(@Query('chainId') chainId?: string) {
+    return this.storesService.findAll(chainId);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Detalle de una tienda específica' })
+  findOne(@Param('id') id: string) {
+    return this.storesService.findOne(id);
+  }
+
+  @Patch(':id')
+  @Roles('master-admin', 'chain-admin', 'store-admin')
+  @ApiOperation({ summary: 'Actualizar datos de una tienda' })
+  update(@Param('id') id: string, @Body() dto: any) {
+    return this.storesService.update(id, dto);
+  }
+
+  @Patch(':id/settings')
+  @Roles('master-admin', 'chain-admin', 'store-admin')
+  @ApiOperation({ summary: 'Actualizar configuración JSONB de la tienda' })
+  updateSettings(@Param('id') id: string, @Body() settings: Record<string, any>) {
+    return this.storesService.updateSettings(id, settings);
+  }
+
+  @Delete(':id')
+  @Roles('master-admin', 'chain-admin')
+  @ApiOperation({ summary: 'Desactivar una tienda (Lógico)' })
+  remove(@Param('id') id: string) {
+    return this.storesService.remove(id);
+  }
+}

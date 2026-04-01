@@ -1,0 +1,272 @@
+﻿
+> web@0.0.0 lint
+> eslint . --max-warnings 0
+
+
+D:\pino\sistema\web\src\components\auth\admin-auth-dialog.tsx
+  53:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\auth\user-switch-dialog.tsx
+  77:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\dashboard\active-cash-registers.tsx
+   7:23  error  'DollarSign' is defined but never used  @typescript-eslint/no-unused-vars
+  10:10  error  'Link' is defined but never used        @typescript-eslint/no-unused-vars
+  12:10  error  'useRouter' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\components\dashboard\master-admin-dashboard-metrics.tsx
+  5:34  error  'query' is defined but never used  @typescript-eslint/no-unused-vars
+  5:41  error  'where' is defined but never used  @typescript-eslint/no-unused-vars
+  9:51  error  'Store' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\components\dashboard\sales-chart.tsx
+  10:10  error  'Bar' is defined but never used       @typescript-eslint/no-unused-vars
+  10:15  error  'BarChart' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\components\dashboard\store-admin-dashboard-metrics.tsx
+  67:5  error  'unsubSales' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   prefer-const
+  72:5  error  'unsubDeliveries' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              prefer-const
+  77:5  error  'unsubSettings' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                prefer-const
+  92:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\components\dashboard\store-admin-dashboard-metrics.tsx:92:7
+  90 |   useEffect(() => {
+  91 |     if (salesData !== null && deliveryData !== null) {
+> 92 |       setLoading(false);
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  93 |     }
+  94 |   }, [salesData, deliveryData]);
+  95 |  react-hooks/set-state-in-effect
+
+D:\pino\sistema\web\src\components\pos\cart-ticket.tsx
+   5:10  error  'Separator' is defined but never used           @typescript-eslint/no-unused-vars
+   6:17  error  'Minus' is defined but never used               @typescript-eslint/no-unused-vars
+   6:24  error  'Plus' is defined but never used                @typescript-eslint/no-unused-vars
+  10:35  error  'addToCart' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\components\pos\cashier-billing-view.tsx
+   32:11  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   33:13  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   38:11  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   42:29  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   45:30  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   47:18  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   49:24  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   50:14  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   51:16  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   60:5   error  'onRemoveProduct' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   81:56  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   87:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\components\pos\cashier-billing-view.tsx:87:17
+  85 |         if (stored) {
+  86 |             try {
+> 87 |                 setHeldOrders(JSON.parse(stored));
+     |                 ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  88 |             } catch (e) {
+  89 |                 console.error("Failed to parse held orders", e);
+  90 |             }  react-hooks/set-state-in-effect
+  159:48  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  525:51  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\pos\cashier-layout.tsx
+  38:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\components\pos\cashier-layout.tsx:38:13
+  36 |     useEffect(() => {
+  37 |         if (isPosView) {
+> 38 |             setIsCollapsed(true);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |         } else {
+  40 |             setIsCollapsed(false);
+  41 |         }  react-hooks/set-state-in-effect
+
+D:\pino\sistema\web\src\components\pos\client-selection-dialog.tsx
+  53:8  warning  React Hook useEffect has a missing dependency: 'handleSearch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\pino\sistema\web\src\components\pos\daily-sales-dialog.tsx
+   15:45  error  'orderBy' is defined but never used       @typescript-eslint/no-unused-vars
+  119:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\pos\payment-dialog.tsx
+   38:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\components\pos\payment-dialog.tsx:38:13
+  36 |     useEffect(() => {
+  37 |         if (open) {
+> 38 |             setAmountStr('');
+     |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |             setCurrency('NIO');
+  40 |             setMethod('Efectivo');
+  41 |         }  react-hooks/set-state-in-effect
+  139:83  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\pos\payment-grid.tsx
+  20:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\pos\product-grid.tsx
+   3:31  error  'useCallback' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  11:64  error  'getDocs' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  22:13  error  'toast' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  28:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\components\pos\product-grid.tsx:28:9
+  26 |         if (!storeId) return;
+  27 |
+> 28 |         setLoading(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  29 |
+  30 |         // Basic query: Top 20 products or filtered by search
+  31 |         // Note: Firestore text search is limited. We'll do a simple startAt/endAt for description  react-hooks/set-state-in-effect
+
+D:\pino\sistema\web\src\components\pos\returns-dialog.tsx
+  21:10  error  'Separator' is defined but never used     @typescript-eslint/no-unused-vars
+  64:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  68:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\pos\supervisor-view.tsx
+  4:30  error  'RefreshCw' is defined but never used     @typescript-eslint/no-unused-vars
+  9:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\components\ui\badge.tsx
+  36:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\pino\sistema\web\src\components\ui\button.tsx
+  56:18  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\pino\sistema\web\src\components\ui\command.tsx
+  26:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+D:\pino\sistema\web\src\components\ui\form.tsx
+  170:3  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\pino\sistema\web\src\components\ui\sidebar.tsx
+  655:26  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\pino\sistema\web\src\components\ui\sidebar.tsx:655:26
+  653 |   // Random width between 50 to 90%.
+  654 |   const width = React.useMemo(() => {
+> 655 |     return `${Math.floor(Math.random() * 40) + 50}%`
+      |                          ^^^^^^^^^^^^^ Cannot call impure function
+  656 |   }, [])
+  657 |
+  658 |   return (  react-hooks/purity
+  762:3   error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-refresh/only-export-components
+
+D:\pino\sistema\web\src\contexts\auth-context.tsx
+  29:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pino\sistema\web\src\contexts\auth-context.tsx:29:9
+  27 |       try {
+  28 |         const userData = JSON.parse(savedUser);
+> 29 |         setUser(userData);
+     |         ^^^^^^^ Avoid calling setState() directly within an effect
+  30 |       } catch (e) {
+  31 |         localStorage.clear();
+  32 |       }  react-hooks/set-state-in-effect
+  30:16  error  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  38:5   error  Unnecessary try/catch wrapper                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   no-useless-catch
+  69:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react-refresh/only-export-components
+
+D:\pino\sistema\web\src\hooks\use-offline-operation.ts
+  46:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  69:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\lib\audit-logger.ts
+  1:8   error  'apiClient' is defined but never used     @typescript-eslint/no-unused-vars
+  8:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\lib\error-logger.ts
+  5:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  8:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\lib\indexed-db-service.ts
+  23:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\lib\mock-inventory-generator.ts
+  2:22  error  'addDoc' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\lib\swalert.ts
+  7:12  error  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  7:15  error  Empty block statement          no-empty
+
+D:\pino\sistema\web\src\lib\sync-service.ts
+   12:7   error  'MAX_RETRY_COUNT' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   39:22  error  'e' is defined but never used                         @typescript-eslint/no-unused-vars
+   56:94  error  Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  114:33  error  Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\pages\login-page.tsx
+  28:9   error  'navigate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  38:19  error  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\pages\store-admin\reports\reports-page.tsx
+   6:3   error    'CardHeader' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+   7:3   error    'CardTitle' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+  17:18  error    'startOfDay' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+  78:6   warning  React Hook useEffect has a missing dependency: 'generateReport'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\pino\sistema\web\src\pages\store-admin\settings\settings-page.tsx
+   9:10  error  'Checkbox' is defined but never used     @typescript-eslint/no-unused-vars
+  10:43  error  'Wrench' is defined but never used       @typescript-eslint/no-unused-vars
+  18:3   error  'FormMessage' is defined but never used  @typescript-eslint/no-unused-vars
+  93:14  error  'error' is defined but never used        @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\pages\store-admin\users\users-page.tsx
+  12:56  error    'ChevronRight' is defined but never used                                                                       @typescript-eslint/no-unused-vars
+  39:6   warning  React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  52:16  error    'error' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\services\pos\ticket-service.ts
+   6:10  error  Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  16:14  error  Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  70:13  error  'price' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\pino\sistema\web\src\types\geo-types.ts
+   6:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pino\sistema\web\src\types\index.ts
+  36:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  55:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 92 problems (89 errors, 3 warnings)
+

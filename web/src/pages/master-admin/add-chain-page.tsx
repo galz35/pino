@@ -1,0 +1,104 @@
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Building2, Save, ArrowLeft } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from '@/lib/swalert';
+import apiClient from '@/services/api-client';
+
+export default function AddChainPage() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    ownerName: '',
+    ownerEmail: '',
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await apiClient.post('/chains', formData);
+      toast.success("Éxito", "Cadena creada correctamente.");
+      navigate('/master-admin/chains');
+    } catch (error) {
+      console.error("Error creating chain:", error);
+      toast.error("Error", "No se pudo crear la cadena.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="p-8 max-w-2xl mx-auto min-h-screen">
+      <div className="flex items-center gap-4 mb-8">
+        <Button variant="ghost" size="icon" className="rounded-full" asChild>
+          <Link to="/master-admin/chains"><ArrowLeft className="h-6 w-6" /></Link>
+        </Button>
+        <div>
+          <h1 className="text-3xl font-black italic uppercase tracking-tighter text-slate-800 leading-none">Nueva Cadena</h1>
+          <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mt-2 flex items-center gap-2">
+            <Building2 className="h-3 w-3 text-blue-500" /> Registro de Corporación
+          </p>
+        </div>
+      </div>
+
+      <Card className="rounded-[40px] border-none shadow-2xl bg-white overflow-hidden">
+        <CardHeader className="bg-slate-50/50 p-8">
+          <CardTitle className="text-xl font-black uppercase text-slate-800">Datos del Propietario</CardTitle>
+          <CardDescription className="text-slate-400 font-bold uppercase text-[10px] mt-1">
+            Información de la entidad principal
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label className="font-black uppercase text-xs text-slate-500">Nombre de la Cadena</Label>
+              <Input 
+                required 
+                className="h-12 rounded-xl border-2 font-bold focus:border-blue-500" 
+                placeholder="Ej: Corporación Los Pinos"
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="font-black uppercase text-xs text-slate-500">Nombre del Dueño</Label>
+              <Input 
+                required 
+                className="h-12 rounded-xl border-2 font-bold" 
+                placeholder="Nombre completo"
+                value={formData.ownerName}
+                onChange={(e) => setFormData({...formData, ownerName: e.target.value})}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="font-black uppercase text-xs text-slate-500">Email de Contacto</Label>
+              <Input 
+                type="email"
+                required
+                className="h-12 rounded-xl border-2 font-bold" 
+                placeholder="email@corporacion.com"
+                value={formData.ownerEmail}
+                onChange={(e) => setFormData({...formData, ownerEmail: e.target.value})}
+              />
+            </div>
+
+            <Button 
+              type="submit" 
+              disabled={loading}
+              className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black shadow-xl shadow-blue-100 uppercase tracking-tighter"
+            >
+              <Save className="mr-2 h-6 w-6" /> {loading ? 'CREANDO...' : 'GUARDAR CADENA'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
