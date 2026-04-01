@@ -1,209 +1,161 @@
-# 03 — Análisis de Brechas: Flutter Móvil
+# 03 - Analisis de Brechas: Flutter Movil
 
-**Referencia:** Secciones 3.2, 4.6-4.7, 6, 16.5-16.6, 21.2-21.3 del requerimiento.txt
+Fecha de corte: 2026-04-01
 
----
+## 1. Correccion importante
 
-## 1. Inventario Flutter vs Requerimientos por Rol
+Este documento reemplaza una version anterior que describia Flutter como si ya tuviera modulos funcionales.
 
-### 1.1 Preventa (Vendedor Móvil)
+Eso ya no es la fuente de verdad.
 
-| Funcionalidad Requerida | Screen/Provider | Estado | Brecha |
-|------------------------|-----------------|--------|--------|
-| Login | `auth/` | ✅ | — |
-| Consultar inventario tiempo real | `preventa_home_screen.dart` | ⚠️ | Existe pero no muestra bultos/unidades |
-| Levantar pedidos | `orders/create_order_screen.dart` | ⚠️ | Falta: tipo contado/crédito, selección nivel precio |
-| Pedido al contado | `orders/checkout_screen.dart` | ⚠️ | No diferencia tipo formalmente |
-| Pedido al crédito | ❌ | ❌ | No existe flujo de crédito que genere CxC |
-| Aplicar precios según permiso | ❌ | ❌ | No hay selector de nivel de precio (1-5) |
-| Catálogo de productos | `products/` | ✅ | — |
+Estado real hoy:
 
-### 1.2 Rutero (Entrega y Cobro)
+- existe scaffold base en `flutter/`
+- el SDK ya esta instalado localmente
+- `pubspec.yaml` ya incluye el stack tecnico recomendado
+- no existe implementacion real de negocio todavia
 
-| Funcionalidad Requerida | Screen/Provider | Estado | Brecha |
-|------------------------|-----------------|--------|--------|
-| Login | `auth/` | ✅ | — |
-| Ver inventario asignado | `rutero_home_screen.dart` | ⚠️ | Existe pero sin bultos/unidades |
-| Pedidos por entregar | `route/delivery_list_screen.dart` | ✅ | — |
-| Detalle de parada | `route/stop_details_screen.dart` | ✅ | — |
-| Cobrar | `preventa_dashboard/cobranza_screen.dart` | ⚠️ | Existe pero no vincula con CxC del backend |
-| Cierre de caja | `home/day_closing_screen.dart` | ⚠️ | Existe UI pero no persiste en backend |
-| Registrar devolución | ❌ | ❌ | No existe screen ni repositorio |
-| Cartera de clientes | `route/client_portfolio_screen.dart` | ✅ | — |
-| Agregar cliente | `route/add_client_screen.dart` | ✅ | — |
+Por tanto, cualquier referencia a pantallas Flutter ya hechas debe considerarse obsoleta.
 
-### 1.3 Bodeguero (Operación Bodega desde móvil — opcional)
+## 2. Estado real actual
 
-| Funcionalidad Requerida | Screen | Estado | Brecha |
-|------------------------|--------|--------|--------|
-| Dashboard bodega | `bodega_dashboard/bodega_screen.dart` | ✅ | — |
-| Preparación pedido | `bodega_dashboard/order_preparation_screen.dart` | ⚠️ | Existe pero sin bultos/unidades |
-| Aprobación | `bodega_dashboard/bodeguero_approval_screen.dart` | ✅ | — |
-| Ayudante dashboard | `bodega_dashboard/ayudante_dashboard_screen.dart` | ✅ | — |
+### 2.1 Lo que si existe
 
----
+- carpeta `flutter/`
+- `pubspec.yaml`
+- `pubspec.lock`
+- `lib/main.dart` de template
+- `README.md` de Flutter
+- dependencias base ya agregadas
 
-## 2. Detalle de Brechas por Funcionalidad
+### 2.2 Lo que no existe todavia
 
-### 2.1 Bultos y Unidades en Inventario Preventa (B1)
+- auth real
+- router real
+- session manager
+- api client conectado
+- repositorios
+- modelos de dominio
+- base local `drift`
+- cola offline
+- listener realtime
+- pantallas por rol
 
-**Estado actual:**
-- `Product` model: tiene `stock` como int simple
-- `preventa_home_screen.dart`: muestra "Stock: X" numérico
+## 3. Stack recomendado ya decidido
 
-**Requerimiento:**
-- Mostrar: "5 bultos + 10 unidades"
-- En pedido: seleccionar cantidad en bultos o unidades
+El stack seleccionado para cuando se retome es:
 
-**Cambios necesarios:**
-1. **Modelo `Product`**: agregar `unitsPerBulk`, `stockBulks`, `stockUnits`
-2. **UI de catálogo**: mostrar dos columnas/badges "Bultos: X | Unidades: Y"
-3. **UI de crear pedido**: Toggle "¿Pedir en bultos o unidades?" con conversión automática
-4. **Provider**: recalcular totales según presentación seleccionada
+- `flutter_riverpod`
+- `go_router`
+- `dio`
+- `flutter_secure_storage`
+- `connectivity_plus`
+- `socket_io_client`
+- `drift`
+- `sqlite3_flutter_libs`
+- `path_provider`
+- `path`
 
-### 2.2 Tipo de Pedido: Contado vs Crédito (requerimiento 6.3)
+Dev tools:
 
-**Estado actual:**
-- `Order` model tiene `status` pero no `paymentType`
-- `create_order_screen.dart` no pregunta tipo de pago
+- `build_runner`
+- `drift_dev`
 
-**Cambios necesarios:**
-1. **Modelo `Order`**: agregar `paymentType` enum (contado, credito)
-2. **UI crear pedido**: Radio buttons "Contado / Crédito" 
-3. **Lógica**: Si crédito → enviar al backend para que genere CxC automáticamente
-4. **Validación**: Solo roles con permiso pueden crear pedidos a crédito
+## 4. Brechas reales hoy
 
-### 2.3 Selección de Precio (1-5) (requerimiento 11)
+### 4.1 Capa de arranque
 
-**Estado actual:**
-- `Product` model tiene `salePrice` pero no expone price1-price5
-- No hay selector de nivel de precio en el flujo de pedido
+Falta:
 
-**Cambios necesarios:**
-1. **Modelo `Product`**: agregar `price1` a `price5`
-2. **UI crear pedido**: Dropdown de nivel de precio
-3. **Regla**: Precio 1 = default, Precio 2-3 = preventa puede seleccionar, Precio 4-5 = placeholder "Requiere autorización" (NO inventar el flujo)
-4. **Cálculo**: Al seleccionar nivel, recalcular precio unitario y total
+- bootstrap real de aplicacion
+- configuracion por entorno
+- tema y shell visual
 
-### 2.4 Devoluciones del Rutero (B7)
+### 4.2 Capa de sesion
 
-**Estado actual:** No existe nada.
+Falta:
 
-**Cambios necesarios:**
-1. **Modelo `Return`** (nuevo, con Freezed):
-```dart
-@freezed
-class Return with _$Return {
-  const factory Return({
-    required String id,
-    required String orderId,
-    required String storeId,
-    required String ruteroId,
-    required List<ReturnItem> items,
-    required DateTime createdAt,
-  }) = _Return;
-}
+- login
+- persistencia segura de tokens
+- refresh token
+- logout limpio
+- guards por rol
 
-@freezed
-class ReturnItem with _$ReturnItem {
-  const factory ReturnItem({
-    required String productId,
-    required String productName,
-    required int quantityBulks,
-    required int quantityUnits,
-  }) = _ReturnItem;
-}
-```
+### 4.3 Capa de networking
 
-2. **Screen `return_screen.dart`** (nuevo):
-   - Seleccionar pedido entregado
-   - Seleccionar productos a devolver
-   - Ingresar cantidades (bultos + unidades)
-   - Confirmar devolución
-   - Enqueue al backend via SyncEngine
+Falta:
 
-3. **Repository `returns_repository.dart`** (nuevo):
-   - `createReturn()` — guarda local + encola POST
-   - `getReturns()` — desde BD local
+- cliente `dio`
+- interceptores
+- manejo centralizado de errores
+- mapeo de contratos backend
 
-4. **Provider `returns_provider.dart`** (nuevo)
+### 4.4 Capa local/offline
 
-### 2.5 Cobros Vinculados a CxC (B9)
+Falta:
 
-**Estado actual:**
-- `cobranza_screen.dart` existe (10KB) con UI de cobro
-- `collection_provider.dart` existe con estado básico
-- `CollectionReceipt` model existe
-- Pero NO se conecta con `accounts_receivable` del backend
+- esquema `drift`
+- cache local
+- cola de sync
+- reconciliacion de operaciones pendientes
 
-**Cambios necesarios:**
-1. **Repository `collections_repository.dart`**: 
-   - Agregar `createCollection()` que envíe POST a `/api/collections`
-   - El backend debe: crear cobro + actualizar `remaining_amount` de la CxC
-2. **Provider**: 
-   - Cargar CxC pendientes del cliente actual
-   - Mostrar saldo pendiente antes de cobrar
-3. **UI**: 
-   - Mostrar lista de CxC pendientes por cliente
-   - Al cobrar: seleccionar CxC, monto, método de pago
-   - Recibo con detalle de abono
+### 4.5 Realtime
 
-### 2.6 Cierre de Caja Persistido (B10)
+Falta:
 
-**Estado actual:**
-- `day_closing_screen.dart` calcula totales localmente
-- `DailyClosing` model tiene: totalSales, totalCollections, totalReturns, cashTotal
-- `closing_provider.dart` agrupa datos pero NO envía al backend
+- conexion Socket.IO
+- listeners de eventos
+- invalidacion o merge local de datos
 
-**Cambios necesarios:**
-1. **Repository**: `recordDailyClosing()` ya existe pero encola genéricamente. Necesita un endpoint backend dedicado
-2. **Backend**: tabla `daily_closings` + módulo NestJS
-3. **Nota**: NO inventar estructura detallada del cierre (sección 14.4 del requerimiento). Solo persistir los campos que ya existen en el modelo
+### 4.6 Features de negocio
 
-### 2.7 Realtime: Escuchar Eventos de Inventario (B5)
+Falta todo el frente movil de negocio:
 
-**Estado actual:**
-- `sync_engine.dart` maneja cola offline pero no escucha eventos entrantes
-- No hay listener de Socket.IO para actualizaciones push
+- vendedor/preventa
+- rutero
+- cartera/cobros
+- devoluciones
+- dashboard movil
+- bodega movil opcional
 
-**Cambios necesarios:**
-1. **Service `realtime_listener.dart`** (nuevo):
-   - Conexión Socket.IO al backend
-   - Escuchar: `INVENTORY_UPDATE`, `ORDER_STATUS_CHANGE`, `NEW_ORDER`
-   - Al recibir: actualizar `LocalDatabase` y notificar providers
-2. **Integración con providers**:
-   - `products_provider`: invalidar cache cuando llega `INVENTORY_UPDATE`
-   - `route_provider`: actualizar cuando llega `ORDER_STATUS_CHANGE`
+## 5. Contrato objetivo con el backend actual
 
----
+La futura app movil debe colgarse del backend ya funcional:
 
-## 3. Archivos Flutter a Crear
+- API base publica: `https://www.rhclaroni.com/api-dev`
+- socket host: `https://www.rhclaroni.com`
+- socket path: `/api-dev/socket.io`
+- namespace: `/events`
 
-| Tipo | Archivo | Propósito |
-|------|---------|-----------|
-| **Model** | `domain/models/return_model.dart` | Modelo de devolución con Freezed |
-| **Model** | `domain/models/account_receivable.dart` | Modelo CxC para mostrar en cobros |
-| **Repository** | `data/repositories/returns_repository.dart` | CRUD devoluciones offline-first |
-| **Repository** | `data/repositories/collections_repository.dart` | Actualizar para vincular con CxC |
-| **Provider** | `presentation/providers/returns_provider.dart` | Estado de devoluciones |
-| **Screen** | `presentation/screens/rutero_dashboard/route/return_screen.dart` | UI de registro de devolución |
-| **Service** | `infrastructure/realtime_listener.dart` | Listener Socket.IO para eventos push |
+No se debe amarrar a `localhost`.
 
-## 4. Archivos Flutter a Modificar
+## 6. Riesgos tecnicos si se retoma mal
 
-| Archivo | Cambio |
-|---------|--------|
-| `domain/models/product.dart` | Agregar: `unitsPerBulk`, `stockBulks`, `stockUnits`, `price1`-`price5` |
-| `domain/models/order.dart` | Agregar: `paymentType`, `priceLevel` |
-| `presentation/screens/preventa_dashboard/preventa_home_screen.dart` | UI bultos/unidades |
-| `presentation/screens/orders/create_order_screen.dart` | Tipo pedido + nivel precio |
-| `presentation/screens/orders/new_order_screen.dart` | Mismo |
-| `presentation/screens/rutero_dashboard/home/rutero_home_screen.dart` | Inventario en bultos/unidades |
-| `presentation/screens/bodega_dashboard/order_preparation_screen.dart` | Requisa bultos→unidades |
-| `presentation/providers/products_provider.dart` | Campos nuevos de producto |
-| `presentation/providers/collection_provider.dart` | Vincular con CxC |
-| `presentation/providers/closing_provider.dart` | Persistir cierre en backend |
-| `data/repositories/products_repository.dart` | Mapeo de campos nuevos |
-| `data/repositories/orders_repository.dart` | Enviar paymentType y priceLevel |
-| `infrastructure/sync_engine.dart` | Integrar con realtime_listener |
-| `infrastructure/local_database.dart` | Agregar tabla local `returns` |
+Los errores mas probables si se arranca sin orden son:
+
+- meter demasiada generacion de codigo desde el inicio
+- construir pantallas antes de cerrar auth/session/api
+- duplicar logica de negocio que ya existe en React/Nest
+- usar contratos distintos a los del backend real
+- intentar offline-first completo antes de tener online-first estable
+
+## 7. Recomendacion de reanudacion
+
+Cuando Flutter se retome, el orden correcto es:
+
+1. bootstrap
+2. config
+3. auth
+4. router
+5. api client
+6. secure storage
+7. drift
+8. sync
+9. realtime
+10. features de negocio
+
+## 8. Documento relacionado
+
+La referencia consolidada para este frente esta en:
+
+- `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`

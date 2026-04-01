@@ -166,6 +166,10 @@
 - [x] `UserNav` ya no depende del asset inexistente `placeholder-user.jpg`
 - [x] Acciones POS de segunda fase (`nota de crédito`, `gaveta`) ya muestran feedback operativo en vez de quedar mudas
 - [x] `npm run build` OK después del cierre final de guards, realtime y subruta
+- [x] SDK Flutter instalado localmente y scaffold base creado en `flutter/`
+- [x] Investigacion Flutter documentada y fase pausada de forma explicita
+- [x] Validada propuesta Gemini de modulo warehouse contra el codigo real
+- [x] Auditoria final backend + React ejecutada con build limpio
 
 ## Pendiente inmediato
 
@@ -174,6 +178,7 @@
 - [ ] Hacer pasada manual operativa en entorno público con login y flujo real
 - [ ] Empujar el corte final a git
 - [ ] Ajustar uso operativo de `consultasql` solo cuando se quiera perf profiling
+- [ ] Implementar modulo de bodega dedicado si entra en alcance
 - [ ] Retomar Flutter en fase posterior
 
 ## Siguiente bloque recomendado

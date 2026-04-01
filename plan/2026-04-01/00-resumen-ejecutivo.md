@@ -16,7 +16,7 @@
 | **BD** | PostgreSQL con 15 tablas en schema.sql |
 | **Módulos activos** | 27 módulos registrados en AppModule |
 | **Autenticación** | JWT con refresh token |
-| **Realtime** | Socket.IO (EventsGateway) — solo emite `NEW_ORDER` |
+| **Realtime** | Socket.IO (EventsGateway) con eventos de pedidos e inventario |
 | **Swagger** | Activo en `/docs` |
 
 **Módulos backend existentes:**
@@ -55,29 +55,21 @@
 - ✅ Authorizations, ControlTower, Suppliers, Help
 - ✅ **Master Admin:** Dashboard, Stores, Chains, Users, Zones, SubZones, Config, Licenses, SyncMonitor
 
-### 1.3 Flutter (Riverpod + Freezed + Offline-First)
+### 1.3 Flutter (Pausado, scaffold base)
 
 | Aspecto | Estado |
 |---------|--------|
-| **Arquitectura** | Clean Architecture (data/domain/infrastructure/presentation) |
-| **Estado** | Riverpod + Freezed + code generation |
-| **BD local** | SQLite (local_database.dart) |
-| **Sync** | SyncEngine con cola de operaciones offline |
-| **Impresión** | Sunmi + Generic printer |
+| **Arquitectura** | Aun no implementada; solo estrategia definida |
+| **Estado** | Scaffold creado en `flutter/`, fase en pausa |
+| **Paquetes base** | Riverpod, go_router, dio, secure_storage, drift, socket_io_client |
+| **BD local** | Aun no implementada |
+| **Sync** | Aun no implementado |
 
-**Screens existentes:**
-- ✅ Auth (login)
-- ✅ Preventa: Home (catálogo + pedidos), Cobranza
-- ✅ Rutero: Home, DayClosing, DeliveryList, StopDetails, ClientPortfolio, AddClient
-- ✅ Bodega: Dashboard, OrderPreparation, BodegueroApproval, AyudanteDashboard
-- ✅ Orders: CreateOrder, NewOrder, Checkout, OrderHistory
-- ✅ Products, Settings, Admin, HomeScreen
-
-**Modelos existentes:**
-- ✅ Order (con OrderItem, Delivery, PreparationStatus, AuthRequest)
-- ✅ Product, Client, CollectionReceipt, DailyClosing
-- ✅ RouteManifest (con RouteStop, StopDelivery)
-- ✅ UserModel, Zone, VisitLog, GlobalSettings, AuthorizationRequest
+**Estado real hoy:**
+- existe `flutter/pubspec.yaml` con el stack tecnico elegido
+- existe `flutter/lib/main.dart` como template base
+- no existen pantallas de negocio ni capas `domain/data/features`
+- la referencia correcta esta en `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`
 
 ---
 
@@ -87,7 +79,7 @@
 
 | # | Brecha | Impacto |
 |---|--------|---------|
-| B1 | **No existe manejo de bultos vs unidades** en BD, backend ni frontend | El cliente exige ver inventario separado en bultos y unidades |
+| B1 | **No existe implementacion movil real todavia** | Flutter sigue en pausa y solo existe scaffold base |
 | B2 | **Inventario del rutero no tiene tabla propia en schema.sql** | `vendor_inventories` existe en servicio pero NO en schema.sql |
 | B3 | **Transferencia bodega→camión no es transaccional completa** | Falta flujo: preparar→alistar→cargar→transferir inventario |
 | B4 | **Estados del pedido no coinciden con requerimiento** | BD usa solo `PENDING`, requerimiento pide: recibido, en_preparación, cargado_camión, en_entrega |

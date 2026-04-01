@@ -26,8 +26,10 @@ Orden recomendado:
 3. `docs/02_MAPA_DEL_PROYECTO.md`
 4. `docs/03_ESTRUCTURA_DEL_SISTEMA.md`
 5. `docs/06_BASE_DE_DATOS_ESTADO_ACTUAL.md`
-6. `plan/2026-04-01/15-mapa-consumo-api-react.md`
-7. `plan/2026-04-01/17-barrido-backend-vs-requerimiento.md`
+6. `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`
+7. `docs/08_VALIDACION_GEMINI_WAREHOUSE.md`
+8. `plan/2026-04-01/15-mapa-consumo-api-react.md`
+9. `plan/2026-04-01/17-barrido-backend-vs-requerimiento.md`
 
 ## 3. Fuentes de verdad
 
@@ -44,6 +46,7 @@ Notas importantes:
 - `schema.sql` es la base estructural, pero la BD viva ya tiene tablas operativas adicionales.
 - la carpeta `plan/` contiene historia, hallazgos y decisiones; `docs/` contiene la referencia consolidada.
 - el frontend ya no usa `localhost` hardcodeado; usa configuracion por entorno.
+- no asumas que `plan/2026-04-01/03-analisis-gap-flutter.md` describe codigo Flutter existente; hoy es una referencia de estrategia, no de implementacion.
 
 ## 4. Donde empezar segun la tarea
 
@@ -59,6 +62,13 @@ Si la tarea es frontend:
 - luego `web/src/components/app-layout.tsx`
 - luego `web/src/services/api-client.ts`
 - despues usa `plan/2026-04-01/15-mapa-consumo-api-react.md`
+
+Si la tarea es Flutter:
+
+- entra por `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`
+- luego `flutter/pubspec.yaml`
+- despues `flutter/README.md`
+- no supongas que existe dominio/repositorios/features; hoy no existen
 
 Si la tarea es base de datos:
 
@@ -113,4 +123,3 @@ Pendiente deliberado:
 
 - Flutter
 - integraciones fisicas de hardware
-

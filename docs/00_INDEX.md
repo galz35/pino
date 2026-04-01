@@ -19,6 +19,8 @@ Orden recomendado de lectura:
 5. [04_FLUJOS_DE_TRABAJO.md](./04_FLUJOS_DE_TRABAJO.md)
 6. [05_MANUAL_DE_USUARIO.md](./05_MANUAL_DE_USUARIO.md)
 7. [06_BASE_DE_DATOS_ESTADO_ACTUAL.md](./06_BASE_DE_DATOS_ESTADO_ACTUAL.md)
+8. [07_FLUTTER_ESTRATEGIA_Y_PAUSA.md](./07_FLUTTER_ESTRATEGIA_Y_PAUSA.md)
+9. [08_VALIDACION_GEMINI_WAREHOUSE.md](./08_VALIDACION_GEMINI_WAREHOUSE.md)
 
 Documentos historicos que siguen siendo utiles:
 
@@ -26,11 +28,13 @@ Documentos historicos que siguen siendo utiles:
 - [plan/2026-04-01/14-barrido-estructura-react.md](../plan/2026-04-01/14-barrido-estructura-react.md)
 - [plan/2026-04-01/15-mapa-consumo-api-react.md](../plan/2026-04-01/15-mapa-consumo-api-react.md)
 - [plan/2026-04-01/17-barrido-backend-vs-requerimiento.md](../plan/2026-04-01/17-barrido-backend-vs-requerimiento.md)
+- [plan/2026-04-01/03-analisis-gap-flutter.md](../plan/2026-04-01/03-analisis-gap-flutter.md)
+- [plan/2026-04-01/07-plan-flutter-movil.md](../plan/2026-04-01/07-plan-flutter-movil.md)
 
 Fuentes de verdad del sistema:
 
 - codigo backend: `backend/src`
 - codigo web: `web/src`
+- codigo flutter actual: `flutter/` (solo scaffold base, no app de negocio aun)
 - DDL base: `backend/src/database/schema.sql`
 - estado vivo de la BD: PostgreSQL `multitienda_db` en el contenedor `postgres_alacaja`
-
