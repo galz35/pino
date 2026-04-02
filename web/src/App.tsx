@@ -36,6 +36,7 @@ const CashRegisterPage = lazy(() => import('@/pages/store-admin/cash-register/ca
 const AuthorizationsPage = lazy(() => import('@/pages/store-admin/authorizations/authorizations-page'));
 const PendingOrdersPage = lazy(() => import('@/pages/store-admin/pending-orders/pending-orders-page'));
 const DispatcherPage = lazy(() => import('@/pages/store-admin/dispatcher/dispatcher-page'));
+const WarehouseDashboardPage = lazy(() => import('@/pages/store-admin/warehouse/warehouse-dashboard-page'));
 const ControlTowerPage = lazy(() => import('@/pages/store-admin/control-tower/control-tower-page'));
 const DeliveryRoutePage = lazy(() => import('@/pages/store-admin/delivery-route/delivery-route-page'));
 const HelpPage = lazy(() => import('@/pages/store-admin/help/help-page'));
@@ -163,6 +164,7 @@ function App() {
                   <Route path="/store/:storeId/authorizations" element={<ProtectedRoute requireStoreAccess allowedRoles={STORE_ADMIN_ROLES}><AuthorizationsPage /></ProtectedRoute>} />
                   <Route path="/store/:storeId/pending-orders" element={<ProtectedRoute requireStoreAccess allowedRoles={DISPATCH_ROLES}><PendingOrdersPage /></ProtectedRoute>} />
                   <Route path="/store/:storeId/dispatcher" element={<ProtectedRoute requireStoreAccess allowedRoles={DISPATCH_ROLES}><DispatcherPage /></ProtectedRoute>} />
+                  <Route path="/store/:storeId/warehouse" element={<ProtectedRoute requireStoreAccess allowedRoles={INVENTORY_ROLES}><WarehouseDashboardPage /></ProtectedRoute>} />
                   <Route path="/store/:storeId/control-tower" element={<ProtectedRoute requireStoreAccess allowedRoles={DISPATCH_ROLES}><ControlTowerPage /></ProtectedRoute>} />
                   <Route path="/store/:storeId/delivery-route" element={<ProtectedRoute requireStoreAccess allowedRoles={DELIVERY_ROLES}><DeliveryRoutePage /></ProtectedRoute>} />
                   <Route path="/store/:storeId/finance/receivables" element={<ProtectedRoute requireStoreAccess allowedRoles={STORE_ADMIN_ROLES}><ReceivablesPage /></ProtectedRoute>} />

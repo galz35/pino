@@ -10,7 +10,7 @@ import {
   LayoutDashboard, Store, Briefcase, Users, WalletCards, RefreshCw,
   FileText, Map, MapPin, Settings, LifeBuoy, Package, History, Wrench,
   ShoppingCart, ClipboardCheck, AreaChart, UsersRound, Truck, HandCoins,
-  ShieldCheck, SendToBack, Route, DollarSign, ListOrdered, PackagePlus, ReceiptText,
+  ShieldCheck, SendToBack, Route, DollarSign, ListOrdered, PackagePlus, ReceiptText, Boxes,
 } from 'lucide-react';
 
 export interface Notification {
@@ -131,6 +131,7 @@ const getStoreAdminNav = (storeId: string, lang: 'es' | 'en', settings: StoreSet
       href: `/store/${storeId}/dashboard`,
       icon: LayoutDashboard,
     },
+    { name: 'Bodega Logística', href: `/store/${storeId}/warehouse`, icon: Boxes },
     { name: translations[lang].products, href: `/store/${storeId}/products`, icon: Package },
     { name: translations[lang].movements, href: `/store/${storeId}/inventory/movements`, icon: History },
     ...(settings.enableSupplierManagement ? [{
@@ -165,6 +166,7 @@ const getStoreAdminNav = (storeId: string, lang: 'es' | 'en', settings: StoreSet
 };
 
 const getBodegueroNav = (storeId: string, lang: 'es' | 'en') => [
+  { name: 'Bodega Logística', href: `/store/${storeId}/warehouse`, icon: Boxes },
   { name: translations[lang].products, href: `/store/${storeId}/products`, icon: Package },
   { name: translations[lang].movements, href: `/store/${storeId}/inventory/movements`, icon: History },
   { name: translations[lang].adjustments, href: `/store/${storeId}/inventory/adjustments`, icon: Wrench },
@@ -188,6 +190,7 @@ const getCashierNav = (storeId: string, lang: 'es' | 'en', settings: StoreSettin
 
 const getDespachoNav = (storeId: string, lang: 'es' | 'en') => [
   { name: translations[lang].dispatcher, href: `/store/${storeId}/dispatcher`, icon: SendToBack },
+  { name: 'Bodega Logística', href: `/store/${storeId}/warehouse`, icon: Boxes },
   { name: translations[lang].help, href: `/store/${storeId}/help`, icon: LifeBuoy },
 ];
 
