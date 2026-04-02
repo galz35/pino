@@ -103,6 +103,8 @@ class SyncQueueProcessor extends Notifier<SyncQueueState> {
 
     try {
       final entries = await _localCache.getPendingSyncEntries(limit: 50);
+      var hasFailedEntries = false;
+      String? failedMessage;
 
       for (final entry in entries) {
         final payload = entry.payloadJson == null
@@ -152,21 +154,36 @@ class SyncQueueProcessor extends Notifier<SyncQueueState> {
             );
             break;
           }
+
+          if (!keepPending) {
+            hasFailedEntries = true;
+            failedMessage = error.message;
+          }
         } catch (error) {
           await _localCache.registerSyncAttempt(
             entry.id,
             errorMessage: error.toString(),
             keepPending: false,
           );
+          hasFailedEntries = true;
+          failedMessage = error.toString();
         }
       }
 
       if (state.status != SyncQueueStatus.offline) {
-        state = state.copyWith(
-          status: SyncQueueStatus.idle,
-          lastSyncAt: DateTime.now().toUtc(),
-          clearError: true,
-        );
+        if (hasFailedEntries) {
+          state = state.copyWith(
+            status: SyncQueueStatus.error,
+            lastError: failedMessage ?? 'Hay operaciones que requieren revisión.',
+            lastSyncAt: DateTime.now().toUtc(),
+          );
+        } else {
+          state = state.copyWith(
+            status: SyncQueueStatus.idle,
+            lastSyncAt: DateTime.now().toUtc(),
+            clearError: true,
+          );
+        }
       }
     } catch (error) {
       state = state.copyWith(
@@ -176,6 +193,11 @@ class SyncQueueProcessor extends Notifier<SyncQueueState> {
     } finally {
       _isProcessing = false;
     }
+  }
+
+  Future<void> retryFailedQueue() async {
+    await _localCache.retryFailedSyncEntries();
+    await processPendingQueue();
   }
 }
 

@@ -56,6 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final networkStatusAsync = ref.watch(networkStatusProvider);
     final realtimeState = ref.watch(realtimeControllerProvider);
     final pendingSyncCountAsync = ref.watch(pendingSyncCountProvider);
+    final failedSyncCountAsync = ref.watch(failedSyncCountProvider);
     final latestRealtimeEventAsync = ref.watch(latestRealtimeEventProvider);
     final storesAsync = ref.watch(assignedStoresProvider);
     final session = authState.session;
@@ -152,9 +153,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               syncQueueState: syncQueueState,
               realtimeState: realtimeState,
               pendingSyncCount: pendingSyncCountAsync.asData?.value ?? 0,
+              failedSyncCount: failedSyncCountAsync.asData?.value ?? 0,
               latestCachedEvent: latestRealtimeEventAsync.asData?.value,
               onRetrySync: () =>
                   ref.read(syncQueueProcessorProvider.notifier).processPendingQueue(),
+              onRetryFailed: () =>
+                  ref.read(syncQueueProcessorProvider.notifier).retryFailedQueue(),
             ),
           ],
         ),
@@ -725,8 +729,10 @@ class _BackendRuntimeCard extends StatelessWidget {
     required this.syncQueueState,
     required this.realtimeState,
     required this.pendingSyncCount,
+    required this.failedSyncCount,
     required this.latestCachedEvent,
     required this.onRetrySync,
+    required this.onRetryFailed,
   });
 
   final String apiBaseUrl;
@@ -736,8 +742,10 @@ class _BackendRuntimeCard extends StatelessWidget {
   final SyncQueueState syncQueueState;
   final RealtimeState realtimeState;
   final int pendingSyncCount;
+  final int failedSyncCount;
   final RealtimeEvent? latestCachedEvent;
   final Future<void> Function() onRetrySync;
+  final Future<void> Function() onRetryFailed;
 
   @override
   Widget build(BuildContext context) {
@@ -790,6 +798,11 @@ class _BackendRuntimeCard extends StatelessWidget {
             label: 'Cola offline',
             value: '$pendingSyncCount pendientes',
           ),
+          const SizedBox(height: 8),
+          _RuntimeLine(
+            label: 'Fallidas',
+            value: '$failedSyncCount requieren reintento',
+          ),
           if (realtimeState.lastEvent != null) ...[
             const SizedBox(height: 8),
             _RuntimeLine(
@@ -812,12 +825,19 @@ class _BackendRuntimeCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 14),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: FilledButton.tonal(
-              onPressed: pendingSyncCount > 0 ? onRetrySync : null,
-              child: const Text('Sincronizar ahora'),
-            ),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              FilledButton.tonal(
+                onPressed: pendingSyncCount > 0 ? onRetrySync : null,
+                child: const Text('Sincronizar ahora'),
+              ),
+              FilledButton.tonal(
+                onPressed: failedSyncCount > 0 ? onRetryFailed : null,
+                child: const Text('Reintentar fallidas'),
+              ),
+            ],
           ),
         ],
       ),

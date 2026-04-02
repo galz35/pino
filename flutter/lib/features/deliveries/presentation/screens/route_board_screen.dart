@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/database/local_cache_repository.dart';
 import '../../../../core/network/connectivity_service.dart';
 import '../../../../core/network/sync_queue_processor.dart';
+import '../../../../core/realtime/realtime_event.dart';
 import '../../../../core/utils/role_utils.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../data/route_board_repository.dart';
@@ -39,6 +41,22 @@ final routeBoardProvider = FutureProvider.family
     .autoDispose<RouteBoardSnapshot, RouteBoardArgs>((ref, args) async {
       ref.watch(networkStatusProvider);
       ref.watch(syncQueueProcessorProvider.select((state) => state.lastSyncAt));
+      ref.watch(
+        latestRealtimeEventProvider.select((asyncEvent) {
+          final event = asyncEvent.asData?.value;
+          if (event == null || event.storeId != args.storeId) {
+            return null;
+          }
+          switch (event.type) {
+            case RealtimeEventType.newOrder:
+            case RealtimeEventType.orderStatusChange:
+            case RealtimeEventType.inventoryTransfer:
+              return '${event.label}:${event.payload.hashCode}';
+            case RealtimeEventType.unknown:
+              return null;
+          }
+        }),
+      );
 
       final session = ref.watch(authControllerProvider).session;
       if (session == null) {

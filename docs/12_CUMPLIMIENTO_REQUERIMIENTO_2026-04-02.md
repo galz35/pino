@@ -22,6 +22,8 @@ La razón principal es móvil/offline:
 - ya existe cola local básica para captura crítica
 - ya existe reproceso automático básico de cola al volver internet
 - ya existe refresco online-first automático al volver internet en pantallas críticas
+- ya existe separación visible entre cola `pendiente` y `fallida`, con reintento manual en Home
+- ya existe refresco por eventos realtime en pantallas móviles críticas de operación
 - pero **no** existe todavía offline-first completo con sincronización automática y reconciliación robusta por mala señal
 
 ## 2. Qué sí cumple fuerte hoy

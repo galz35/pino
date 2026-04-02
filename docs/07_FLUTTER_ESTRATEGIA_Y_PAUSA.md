@@ -152,6 +152,8 @@ Observacion importante:
 - la cola ya intenta reprocesarse cuando vuelve internet
 - la sesión ya puede restaurarse con tolerancia a caída de red
 - las pantallas críticas móviles ya se refrescan otra vez cuando vuelve internet o termina la cola local
+- Home ya separa operaciones `pendientes` y `fallidas`, y permite reintentar fallidas manualmente
+- `catálogo`, `ruta/entregas` y `bodega` ya reaccionan mejor a eventos realtime de la tienda activa
 - ya existe comprobante PDF liviano y opcional para pedido/cobro
 - ya existe el primer corte real de preventa, catálogo, clientes, ruta, cobros, devoluciones y bodega
 - todavía falta procesamiento offline completo

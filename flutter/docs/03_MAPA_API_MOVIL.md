@@ -109,6 +109,10 @@ Fecha de corte: 2026-04-02
     - `lib/core/realtime/websocket_service.dart`
     - `lib/core/realtime/realtime_controller.dart`
     - `lib/core/realtime/realtime_event.dart`
+  - impacto actual:
+    - refresca mejor `catálogo` cuando cambia inventario
+    - refresca mejor `ruta/entregas` cuando cambia orden o transferencia
+    - refresca mejor `bodega` cuando entra orden o cambia estado
 
 - `drift`
   - cache de tiendas asignadas
@@ -132,6 +136,7 @@ Fecha de corte: 2026-04-02
 - `sync queue processor`
   - procesa la cola local al haber sesión y red disponible
   - al completar sync, ayuda a forzar recarga online-first de pantallas activas
+  - permite reintentar entradas fallidas desde Home
   - archivo:
     - `lib/core/network/sync_queue_processor.dart`
 
@@ -156,6 +161,7 @@ Pero hoy el alcance offline es este:
 - sí puede encolar devolución si falla la conectividad
 - sí intenta reprocesar la cola al volver la conectividad
 - sí vuelve a refrescar pantallas críticas cuando regresa internet o termina la cola
+- sí expone pendientes y fallidas por separado en Home para reintento manual
 - sí puede restaurar sesión cacheada aunque falle la red al abrir
 
 Todavía no hace de forma integral:

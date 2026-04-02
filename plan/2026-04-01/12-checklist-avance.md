@@ -223,6 +223,9 @@
 - [x] `flutter analyze` OK después del bloque de cache móvil ampliada
 - [x] `flutter test` OK después del bloque de cache móvil ampliada
 - [x] Pruebas SQLite de repositorio documentadas como `skip` por límite de `GLIBC` del VPS Ubuntu 20.04
+- [x] Home Flutter ya separa operaciones pendientes y fallidas en cola local
+- [x] `sync_queue_processor` ya permite reintentar fallidas manualmente
+- [x] `catálogo`, `ruta/entregas` y `bodega` móvil ya reaccionan mejor a eventos realtime
 
 ## Pendiente inmediato
 

@@ -402,6 +402,17 @@ class AppDatabase extends _$AppDatabase {
         .get();
   }
 
+  Future<void> retryFailedSyncEntries() {
+    return (update(syncQueueEntries)
+          ..where((table) => table.status.equals('failed')))
+        .write(
+          const SyncQueueEntriesCompanion(
+            status: Value('pending'),
+            errorMessage: Value(null),
+          ),
+        );
+  }
+
   Future<void> markSyncEntryCompleted(int id) {
     return (update(syncQueueEntries)..where((table) => table.id.equals(id))).write(
       SyncQueueEntriesCompanion(
@@ -443,6 +454,16 @@ class AppDatabase extends _$AppDatabase {
           ..where(syncQueueEntries.status.equals('pending')))
         .watchSingle()
         .map((row) => row.read(pendingCount) ?? 0);
+  }
+
+  Stream<int> watchFailedSyncCount() {
+    final failedCount = syncQueueEntries.id.count();
+
+    return (selectOnly(syncQueueEntries)
+          ..addColumns([failedCount])
+          ..where(syncQueueEntries.status.equals('failed')))
+        .watchSingle()
+        .map((row) => row.read(failedCount) ?? 0);
   }
 }
 

@@ -22,6 +22,8 @@ Flutter queda al `100%` dentro del alcance móvil acordado para este corte:
 - fallback a cola local para pedido, cobro y devolución cuando falla la conectividad
 - reproceso automático básico de cola al volver internet
 - refresco online-first automático al volver internet o vaciar la cola local
+- visibilidad de cola pendiente/fallida y reintento manual de fallidas
+- refresco de pantallas críticas por eventos realtime de la tienda activa
 - restauración de sesión con tolerancia a falla de red
 
 ## 2. Qué no se está prometiendo

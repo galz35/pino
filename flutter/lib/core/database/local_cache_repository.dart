@@ -358,6 +358,10 @@ class LocalCacheRepository {
     return _database.watchPendingSyncCount();
   }
 
+  Stream<int> watchFailedSyncCount() {
+    return _database.watchFailedSyncCount();
+  }
+
   Future<void> logRealtimeEvent(RealtimeEvent event) async {
     await _database.insertRealtimeEvent(
       RealtimeEventLogsCompanion.insert(
@@ -423,6 +427,10 @@ class LocalCacheRepository {
       keepPending: keepPending,
     );
   }
+
+  Future<void> retryFailedSyncEntries() {
+    return _database.retryFailedSyncEntries();
+  }
 }
 
 final localCacheRepositoryProvider = Provider<LocalCacheRepository>((ref) {
@@ -431,6 +439,10 @@ final localCacheRepositoryProvider = Provider<LocalCacheRepository>((ref) {
 
 final pendingSyncCountProvider = StreamProvider<int>((ref) {
   return ref.read(localCacheRepositoryProvider).watchPendingSyncCount();
+});
+
+final failedSyncCountProvider = StreamProvider<int>((ref) {
+  return ref.read(localCacheRepositoryProvider).watchFailedSyncCount();
 });
 
 final latestRealtimeEventProvider = StreamProvider<RealtimeEvent?>((ref) {
