@@ -110,7 +110,7 @@ export class OrdersService {
     const order = this.mapRow(res.rows[0]);
 
     const itemsRes = await this.db.query(
-      `SELECT oi.*, p.description as product_name, p.barcode
+      `SELECT oi.*, p.description as product_name, p.barcode, p.units_per_bulk
        FROM order_items oi
        LEFT JOIN products p ON p.id = oi.product_id
        WHERE oi.order_id = $1`,
@@ -123,6 +123,8 @@ export class OrdersService {
       productName: r.product_name || 'N/A',
       barcode: r.barcode,
       quantity: r.quantity,
+      presentation: r.presentation || 'UNIT',
+      unitsPerBulk: parseInt(r.units_per_bulk || 1, 10),
       unitPrice: parseFloat(r.unit_price),
       subtotal: parseFloat(r.subtotal),
     }));
@@ -130,7 +132,7 @@ export class OrdersService {
     return order;
   }
 
-  async updateStatus(id: string, newStatus: string, updatedBy?: string) {
+  async updateStatus(id: string, newStatus: string, updatedBy?: string, vendorId?: string) {
     const validTransitions: Record<string, string[]> = {
       'RECIBIDO': ['EN_PREPARACION', 'CANCELADO'],
       'EN_PREPARACION': ['ALISTADO', 'CANCELADO'],
@@ -148,7 +150,7 @@ export class OrdersService {
       const currentStatus = res.rows[0].status.toUpperCase();
       const targetStatus = newStatus.toUpperCase();
       const storeId = res.rows[0].store_id;
-      const vendorId = res.rows[0].vendor_id;
+      let effectiveVendorId = res.rows[0].vendor_id;
 
       if (currentStatus === targetStatus) {
         return this.findOne(id);
@@ -162,7 +164,15 @@ export class OrdersService {
       }
 
       if (targetStatus === 'CARGADO_CAMION' && currentStatus !== 'CARGADO_CAMION') {
-        if (!vendorId) throw new NotFoundException('El pedido requiere un vendor_id para cargar al camión.');
+        if (vendorId) {
+          await client.query(
+            'UPDATE orders SET vendor_id = $1, updated_at = NOW() WHERE id = $2',
+            [vendorId, id],
+          );
+          effectiveVendorId = vendorId;
+        }
+
+        if (!effectiveVendorId) throw new NotFoundException('El pedido requiere un vendor_id para cargar al camión.');
         const itemsRes = await client.query('SELECT oi.*, p.units_per_bulk FROM order_items oi JOIN products p ON p.id = oi.product_id WHERE oi.order_id = $1', [id]);
         for (const item of itemsRes.rows) {
           const upb = item.units_per_bulk || 1;
@@ -182,12 +192,12 @@ export class OrdersService {
           `, [totalUnits, item.product_id]);
 
           // Sumar a vendor_inventories
-          const viRes = await client.query('SELECT id FROM vendor_inventories WHERE vendor_id = $1 AND product_id = $2 FOR UPDATE', [vendorId, item.product_id]);
+          const viRes = await client.query('SELECT id FROM vendor_inventories WHERE vendor_id = $1 AND product_id = $2 FOR UPDATE', [effectiveVendorId, item.product_id]);
           if (viRes.rowCount === 0) {
             await client.query(`
               INSERT INTO vendor_inventories (vendor_id, product_id, store_id, assigned_quantity, current_quantity, assigned_bulks, assigned_units, current_bulks, current_units)
               VALUES ($1, $2, $3, $4, $4, $5, $6, $5, $6)
-            `, [vendorId, item.product_id, storeId, totalUnits, qtyBulks, qtyUnits]);
+            `, [effectiveVendorId, item.product_id, storeId, totalUnits, qtyBulks, qtyUnits]);
           } else {
             await client.query(`
               UPDATE vendor_inventories 
@@ -212,7 +222,7 @@ export class OrdersService {
       }
 
       if (targetStatus === 'ENTREGADO' && currentStatus !== 'ENTREGADO') {
-        if (!vendorId) throw new NotFoundException('El pedido requiere un vendor_id para la entrega.');
+        if (!effectiveVendorId) throw new NotFoundException('El pedido requiere un vendor_id para la entrega.');
         const itemsRes = await client.query('SELECT oi.*, p.units_per_bulk FROM order_items oi JOIN products p ON p.id = oi.product_id WHERE oi.order_id = $1', [id]);
         for (const item of itemsRes.rows) {
           const upb = item.units_per_bulk || 1;
@@ -227,7 +237,7 @@ export class OrdersService {
                 current_units = GREATEST(current_quantity - $1, 0) % $4,
                 updated_at = NOW()
             WHERE vendor_id = $2 AND product_id = $3
-          `, [totalUnits, vendorId, item.product_id, upb]);
+          `, [totalUnits, effectiveVendorId, item.product_id, upb]);
         }
       }
 
@@ -244,6 +254,20 @@ export class OrdersService {
         storeId: storeId,
         payload: { orderId: id, status: targetStatus, previousStatus: currentStatus, updatedBy },
       });
+
+      if (targetStatus === 'CARGADO_CAMION' && currentStatus !== 'CARGADO_CAMION') {
+        this.eventsGateway.emitSyncUpdate({
+          type: 'INVENTORY_TRANSFER',
+          storeId,
+          payload: {
+            orderId: id,
+            status: targetStatus,
+            previousStatus: currentStatus,
+            vendorId: effectiveVendorId,
+            updatedBy,
+          },
+        });
+      }
 
       return order;
     });

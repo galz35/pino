@@ -48,9 +48,9 @@ export class OrdersController {
   @ApiOperation({ summary: 'Actualizar status de un pedido' })
   updateStatus(
     @Param('id') id: string,
-    @Body() dto: { status: string; updatedBy?: string },
+    @Body() dto: { status: string; updatedBy?: string; vendorId?: string },
   ) {
-    return this.service.updateStatus(id, dto.status, dto.updatedBy);
+    return this.service.updateStatus(id, dto.status, dto.updatedBy, dto.vendorId);
   }
 
   @Patch(':id/prepare')
@@ -67,8 +67,8 @@ export class OrdersController {
 
   @Patch(':id/load-truck')
   @ApiOperation({ summary: 'Marcar pedido como cargado al camión' })
-  loadTruck(@Param('id') id: string, @Body() dto: { updatedBy?: string }) {
-    return this.service.updateStatus(id, 'CARGADO_CAMION', dto.updatedBy);
+  loadTruck(@Param('id') id: string, @Body() dto: { updatedBy?: string; vendorId?: string }) {
+    return this.service.updateStatus(id, 'CARGADO_CAMION', dto.updatedBy, dto.vendorId);
   }
 
   @Patch(':id/dispatch')
