@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "262676373904",
+    "project_id": "multitiendapwa2",
+    "storage_bucket": "multitiendapwa2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262676373904:android:03dc0261d6794c1d4b9315",
+        "android_client_info": {
+          "package_name": "com.lazelva.lospinos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262676373904-386828ibs3ehtco0ntokgdf24nac8bq3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lazelva.lospinos",
+            "certificate_hash": "1e30c86e382f5c2cf7e4ef0c2d89b560ecf0619c"
+          }
+        },
+        {
+          "client_id": "262676373904-lr4c9te3j2bi9vrsvr26jpc9pi4d0dh8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZdcg4wOfaX-T8jo7fk4H4WoL9cnEOpgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262676373904-lr4c9te3j2bi9vrsvr26jpc9pi4d0dh8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

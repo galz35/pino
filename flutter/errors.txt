@@ -1,0 +1,6 @@
+﻿ERROR|COMPILE_TIME_ERROR|UNDEFINED_GETTER|D:\\pino\\flutter\\lib\\data\\repositories\\visit_logs_repository.dart|55|25|9|The getter 'timestamp' isn't defined for the type 'VisitLog'.
+ERROR|COMPILE_TIME_ERROR|UNDEFINED_GETTER|D:\\pino\\flutter\\lib\\data\\repositories\\visit_logs_repository.dart|67|32|9|The getter 'timestamp' isn't defined for the type 'VisitLog'.
+WARNING|STATIC_WARNING|UNUSED_FIELD|D:\\pino\\flutter\\lib\\data\\repositories\\orders_repository.dart|13|19|10|The value of the field '_apiClient' isn't used.
+WARNING|STATIC_WARNING|UNUSED_FIELD|D:\\pino\\flutter\\lib\\data\\repositories\\orders_repository.dart|15|29|13|The value of the field '_connectivity' isn't used.
+WARNING|STATIC_WARNING|UNUSED_FIELD|D:\\pino\\flutter\\lib\\data\\repositories\\orders_repository.dart|16|16|5|The value of the field '_uuid' isn't used.
+WARNING|STATIC_WARNING|UNUSED_IMPORT|D:\\pino\\flutter\\lib\\data\\repositories\\products_repository.dart|4|8|39|Unused import: '../../infrastructure/sync_engine.dart'.
