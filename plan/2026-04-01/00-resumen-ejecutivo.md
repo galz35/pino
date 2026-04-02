@@ -55,20 +55,22 @@
 - ✅ Authorizations, ControlTower, Suppliers, Help
 - ✅ **Master Admin:** Dashboard, Stores, Chains, Users, Zones, SubZones, Config, Licenses, SyncMonitor
 
-### 1.3 Flutter (Pausado, scaffold base)
+### 1.3 Flutter (Corte inicial activo)
 
 | Aspecto | Estado |
 |---------|--------|
-| **Arquitectura** | Aun no implementada; solo estrategia definida |
-| **Estado** | Scaffold creado en `flutter/`, fase en pausa |
+| **Arquitectura** | Bootstrap real con `ProviderScope`, `go_router` y Riverpod |
+| **Estado** | Corte inicial móvil implementado dentro de `flutter/` |
 | **Paquetes base** | Riverpod, go_router, dio, secure_storage, drift, socket_io_client |
-| **BD local** | Aun no implementada |
-| **Sync** | Aun no implementado |
+| **BD local** | Pendiente |
+| **Sync** | Pendiente |
 
 **Estado real hoy:**
 - existe `flutter/pubspec.yaml` con el stack tecnico elegido
-- existe `flutter/lib/main.dart` como template base
-- no existen pantallas de negocio ni capas `domain/data/features`
+- existe login real conectado al backend actual
+- existe sesion persistida y router base
+- existen `SplashScreen`, `LoginScreen` y `HomeScreen`
+- no existen todavia features moviles de negocio completas
 - la referencia correcta esta en `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`
 
 ---
@@ -79,7 +81,7 @@
 
 | # | Brecha | Impacto |
 |---|--------|---------|
-| B1 | **No existe implementacion movil real todavia** | Flutter sigue en pausa y solo existe scaffold base |
+| B1 | **Flutter solo tiene corte inicial** | Aun faltan catalogo, ruta, cobros, devoluciones y realtime movil |
 | B2 | **Inventario del rutero no tiene tabla propia en schema.sql** | `vendor_inventories` existe en servicio pero NO en schema.sql |
 | B3 | **Transferencia bodega→camión no es transaccional completa** | Falta flujo: preparar→alistar→cargar→transferir inventario |
 | B4 | **Estados del pedido no coinciden con requerimiento** | BD usa solo `PENDING`, requerimiento pide: recibido, en_preparación, cargado_camión, en_entrega |

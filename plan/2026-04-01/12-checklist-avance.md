@@ -8,7 +8,7 @@
 - Base de datos + backend: **100%**
 - React web: **100%**
 - Despliegue `/dev` + `/api-dev`: **92%**
-- Flutter: **0%** (`fase posterior`)
+- Flutter: **18%** (`corte inicial reactivado`)
 
 ## Hecho
 
@@ -170,6 +170,15 @@
 - [x] Investigacion Flutter documentada y fase pausada de forma explicita
 - [x] Validada propuesta Gemini de modulo warehouse contra el codigo real
 - [x] Auditoria final backend + React ejecutada con build limpio
+- [x] Reparado contrato `orders` para bodega: `vendorId`, `presentation`, `unitsPerBulk`, `INVENTORY_TRANSFER`
+- [x] Reparado gitlink roto `flutter` y convertido a carpeta versionable del repo
+- [x] Bootstrap Flutter real implementado
+- [x] Login Flutter conectado al backend actual
+- [x] Sesion persistida en Flutter con `flutter_secure_storage`
+- [x] Router Flutter base con `go_router`
+- [x] `SplashScreen`, `LoginScreen` y `HomeScreen` iniciales implementadas
+- [x] `flutter analyze` OK
+- [x] `flutter test` OK
 
 ## Pendiente inmediato
 
@@ -179,7 +188,10 @@
 - [ ] Empujar el corte final a git
 - [ ] Ajustar uso operativo de `consultasql` solo cuando se quiera perf profiling
 - [ ] Implementar modulo de bodega dedicado si entra en alcance
-- [ ] Retomar Flutter en fase posterior
+- [ ] Implementar persistencia local con `drift`
+- [ ] Implementar sync offline
+- [ ] Implementar realtime por `socket_io_client`
+- [ ] Implementar features móviles de negocio
 
 ## Siguiente bloque recomendado
 

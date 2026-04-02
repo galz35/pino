@@ -31,6 +31,7 @@ Documentos historicos que siguen siendo utiles:
 - [plan/2026-04-01/17-barrido-backend-vs-requerimiento.md](../plan/2026-04-01/17-barrido-backend-vs-requerimiento.md)
 - [plan/2026-04-01/03-analisis-gap-flutter.md](../plan/2026-04-01/03-analisis-gap-flutter.md)
 - [plan/2026-04-01/07-plan-flutter-movil.md](../plan/2026-04-01/07-plan-flutter-movil.md)
+- [plan/2026-04-01/19-flutter-corte-inicial-2026-04-02.md](../plan/2026-04-01/19-flutter-corte-inicial-2026-04-02.md)
 
 Fuentes de verdad del sistema:
 

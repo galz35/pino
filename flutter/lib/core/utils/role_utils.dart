@@ -1,0 +1,80 @@
+enum AppRole {
+  masterAdmin,
+  owner,
+  storeAdmin,
+  cashier,
+  inventory,
+  dispatcher,
+  rutero,
+  vendor,
+  salesManager,
+  unknown,
+}
+
+String _normalizeRawRole(String? value) {
+  return (value ?? '')
+      .toLowerCase()
+      .trim()
+      .replaceAll('_', '-')
+      .replaceAll(' ', '-');
+}
+
+AppRole normalizeRole(String? value) {
+  switch (_normalizeRawRole(value)) {
+    case 'master-admin':
+    case 'masteradmin':
+      return AppRole.masterAdmin;
+    case 'owner':
+      return AppRole.owner;
+    case 'store-admin':
+    case 'store-administrator':
+    case 'admin':
+      return AppRole.storeAdmin;
+    case 'cashier':
+    case 'cajero':
+      return AppRole.cashier;
+    case 'inventory':
+    case 'warehouse':
+    case 'bodeguero':
+    case 'ayudante-de-bodega':
+      return AppRole.inventory;
+    case 'dispatcher':
+    case 'despacho':
+      return AppRole.dispatcher;
+    case 'rutero':
+      return AppRole.rutero;
+    case 'vendor':
+    case 'vendedor-ambulante':
+      return AppRole.vendor;
+    case 'sales-manager':
+    case 'gestor-de-ventas':
+      return AppRole.salesManager;
+    default:
+      return AppRole.unknown;
+  }
+}
+
+String roleLabel(AppRole role) {
+  switch (role) {
+    case AppRole.masterAdmin:
+      return 'Master Admin';
+    case AppRole.owner:
+      return 'Owner';
+    case AppRole.storeAdmin:
+      return 'Administrador de tienda';
+    case AppRole.cashier:
+      return 'Cajero';
+    case AppRole.inventory:
+      return 'Inventario / Bodega';
+    case AppRole.dispatcher:
+      return 'Despacho';
+    case AppRole.rutero:
+      return 'Rutero';
+    case AppRole.vendor:
+      return 'Vendedor';
+    case AppRole.salesManager:
+      return 'Gestor de ventas';
+    case AppRole.unknown:
+      return 'Rol no identificado';
+  }
+}

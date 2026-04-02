@@ -15,7 +15,7 @@ Hoy el alcance realmente implementado es:
 - backend REST operativo
 - frontend React operativo
 - tiempo real por Socket.IO
-- Flutter todavia no implementado
+- Flutter con corte inicial de bootstrap, auth y shell
 
 ## 2. Como debes leer el proyecto
 
@@ -68,7 +68,7 @@ Si la tarea es Flutter:
 - entra por `docs/07_FLUTTER_ESTRATEGIA_Y_PAUSA.md`
 - luego `flutter/pubspec.yaml`
 - despues `flutter/README.md`
-- no supongas que existe dominio/repositorios/features; hoy no existen
+- no supongas que ya existen features de negocio; hoy existe base tecnica, auth y shell inicial
 
 Si la tarea es base de datos:
 
@@ -78,7 +78,7 @@ Si la tarea es base de datos:
 
 ## 5. Reglas practicas para tocar el proyecto
 
-- no asumas que Flutter existe; hoy no existe codigo real
+- no asumas que Flutter ya tiene preventa, ruta o cobros; hoy solo existe el corte inicial
 - si cambias contratos de API, revisa `plan/2026-04-01/15-mapa-consumo-api-react.md`
 - si cambias rutas o guards de roles, revisa `web/src/App.tsx`, `web/src/lib/user-role.ts` y `web/src/lib/redirect-logic.ts`
 - si cambias flujos financieros, revisa tanto backend como `web/src/services/finance-service.ts`
@@ -121,5 +121,5 @@ Este corte deja fuerte:
 
 Pendiente deliberado:
 
-- Flutter
+- features de negocio en Flutter
 - integraciones fisicas de hardware

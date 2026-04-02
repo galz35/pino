@@ -1,10 +1,11 @@
-# Flutter: Estrategia, Investigacion y Pausa
-
-Fecha de corte: 2026-04-01
+# Flutter: Estrategia y Corte Inicial
+Fecha de corte: 2026-04-02
 
 ## 1. Estado real hoy
 
-Flutter no esta implementado como app de negocio todavia.
+Flutter ya no está solo en investigación.
+
+Hoy existe un corte inicial operativo del proyecto móvil, pero todavía no existen las features de negocio completas.
 
 Lo que si existe hoy:
 
@@ -12,19 +13,23 @@ Lo que si existe hoy:
 - version validada: `Flutter 3.41.6` y `Dart 3.11.4`
 - scaffold real creado en `flutter/`
 - dependencias base ya agregadas en `flutter/pubspec.yaml`
+- bootstrap real de aplicación
+- runtime config para API y Socket.IO
+- login conectado al backend NestJS actual
+- sesión persistida con `flutter_secure_storage`
+- router base con `go_router`
+- splash screen y home inicial por rol
+- `flutter analyze` limpio
+- `flutter test` limpio en el corte inicial
 
 Lo que no existe todavia:
 
-- capa `domain`
-- repositorios
-- navegacion real
-- autenticacion conectada al backend
 - base local `drift`
 - cola offline
 - listeners realtime
 - pantallas de negocio
 
-En otras palabras: la carpeta `flutter/` ya no esta vacia, pero todavia no es la app movil de `pino`.
+En otras palabras: la carpeta `flutter/` ya es una app base real, pero todavía no es la app móvil completa de `pino`.
 
 ## 2. Stack recomendado para este proyecto
 
@@ -115,41 +120,55 @@ Archivos relevantes hoy:
 - `flutter/pubspec.lock`
 - `flutter/lib/main.dart`
 - `flutter/README.md`
+- `flutter/lib/app/`
+- `flutter/lib/core/`
+- `flutter/lib/features/auth/`
+- `flutter/lib/features/home/`
+- `flutter/lib/features/startup/`
 
 Observacion importante:
 
-- `flutter/lib/main.dart` sigue siendo un template base y no representa la arquitectura objetivo de `pino`
-- cualquier trabajo futuro debe reemplazar ese entrypoint temprano
+- `flutter/lib/main.dart` ya no es el template roto inicial
+- existe un primer corte funcional con auth y navegación
+- todavía faltan features reales de preventa, ruta, cobros, devoluciones y realtime
 
-## 6. Orden correcto para retomarlo
+## 6. Reparacion de versionado
 
-Si Flutter se retoma mas adelante, el orden correcto es:
+Se corrigió un problema real del repo:
 
-1. bootstrap real de app
-2. runtime config
-3. session/auth
-4. router y shell por rol
-5. api client
-6. secure storage
-7. drift local
-8. sync offline
-9. realtime
-10. features de negocio
+- `flutter` estaba registrado en git como un gitlink `160000`
+- no existía `.gitmodules`
+- eso impedía versionar archivos Flutter dentro del repo principal
 
-No conviene comenzar por bodega, cobros o preventa sin cerrar antes auth, shell y networking.
+En este corte se reemplazó ese gitlink roto por una carpeta normal versionable dentro de `pino`.
 
-## 7. Decision actual
+## 7. Orden correcto para continuar
+El orden correcto desde este corte es:
 
-Flutter queda oficialmente en pausa.
+1. drift local
+2. sync offline
+3. realtime
+4. catálogo móvil
+5. preventa
+6. ruta y entrega
+7. cartera y cobros
+8. devoluciones
+9. módulo logístico móvil opcional
+
+No conviene saltar directo a features pesadas sin cerrar primero persistencia local y sincronización.
+
+## 8. Decision actual
+
+Flutter quedó reactivado y ya tiene corte inicial.
 
 Fuente de verdad actual del producto:
 
 - backend NestJS
 - frontend React
 
-Cuando Flutter se retome, este documento y `plan/2026-04-01/07-plan-flutter-movil.md` deben ser el punto de partida, no el template generado.
+Para continuar, este documento y `plan/2026-04-01/19-flutter-corte-inicial-2026-04-02.md` son el punto de partida correcto.
 
-## 8. Fuentes oficiales revisadas
+## 9. Fuentes oficiales revisadas
 
 - Flutter app architecture:
   - https://docs.flutter.dev/app-architecture
