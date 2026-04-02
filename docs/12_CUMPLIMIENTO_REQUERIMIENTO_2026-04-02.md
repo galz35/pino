@@ -23,6 +23,7 @@ La razón principal es móvil/offline:
 - ya existe reproceso automático básico de cola al volver internet
 - ya existe refresco online-first automático al volver internet en pantallas críticas
 - ya existe separación visible entre cola `pendiente` y `fallida`, con reintento manual en Home
+- ya existe visibilidad de operaciones locales recientes en Home para inspección rápida
 - ya existe refresco por eventos realtime en pantallas móviles críticas de operación
 - pero **no** existe todavía offline-first completo con sincronización automática y reconciliación robusta por mala señal
 
@@ -91,6 +92,7 @@ Cumplido fuerte:
 - PDF liviano opcional para pedido y cobro
 - cola local para pedido, cobro y devolución bajo falla de conectividad
 - reproceso básico cuando vuelve conectividad
+- visibilidad de cola y operaciones recientes desde Home
 
 ## 3. Qué no está al 100% del requerimiento global
 

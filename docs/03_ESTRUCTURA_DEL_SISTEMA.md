@@ -165,6 +165,8 @@ No hay una app offline completa separada, pero si existe infraestructura para:
 - heartbeat
 - cola de sincronizacion
 - logs de sincronizacion
+- refresco online-first al volver internet
+- separación visible entre cola pendiente y fallida
 
 Archivos clave:
 
@@ -198,8 +200,19 @@ Hoy:
 - persistencia local actual:
   - `drift` con SQLite real
   - cache de tiendas asignadas
+  - cache de catálogo
+  - cache de clientes
+  - cache de cartera pendiente
+  - cache de resumen de cobranza
+  - cache de rutas
+  - cache de entregas
   - log local de eventos realtime
-  - cola offline base
+  - cola offline para pedido, cobro y devolución
+- capacidades operativas actuales:
+  - Home muestra estado de internet, sync, cola pendiente y cola fallida
+  - Home muestra operaciones locales recientes para inspección rápida
+  - catálogo, ruta y bodega refrescan por realtime de la tienda activa
+  - si falla red, pedido, cobro y devolución pueden quedar en cola local para reintento
 
 Lo que sigue fuera del alcance actual:
 

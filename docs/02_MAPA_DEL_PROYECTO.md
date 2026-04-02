@@ -9,6 +9,11 @@ Directorios principales:
 - `flutter/`: app móvil Flutter para operación rápida de calle y bodega
 - `plan/`: bitacora de analisis, hallazgos, decisiones y checklist de avance
 - `docs/`: referencia consolidada de arquitectura y operacion
+- `manual_update_dev.sh`: script versionado para actualizar backend y publicar React manualmente
+
+Script operativo local del VPS:
+
+- `/root/ipino.sh`: wrapper manual para ejecutar el update del repo sin entrar a la carpeta
 
 ## 2. Mapa de backend
 
@@ -139,6 +144,8 @@ Backend:
 Frontend:
 
 - SPA bajo basename `/dev`
+- publicación manual desde `manual_update_dev.sh`
+- wrapper local disponible en `/root/ipino.sh`
 
 Base de datos:
 
@@ -171,10 +178,20 @@ Persistencia local Flutter hoy:
 
 - SQLite real vía `drift`
 - cache de tiendas asignadas
+- cache de catálogo
+- cache de clientes
+- cache de cartera pendiente
+- cache de resumen de cobranza
+- cache de rutas
+- cache de entregas
 - bitácora local de eventos realtime
-- cola offline base
+- cola offline para pedido, cobro y devolución
+- visibilidad en Home de cola pendiente, fallida y operaciones recientes
+- refresco automático al volver internet y cuando termina la cola
+- refresco por realtime en catálogo, ruta y bodega de la tienda activa
 
 No existe todavía:
 
-- cache completa de catálogo, clientes, pedidos, cobros y ruta
 - sync offline integral con reconciliación automática
+- replay completo de todas las operaciones de negocio
+- operación 100% offline en todas las pantallas

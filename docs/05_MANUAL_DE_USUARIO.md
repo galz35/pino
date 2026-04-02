@@ -202,6 +202,7 @@ Flujo típico:
 5. buscar producto
 6. ajustar cantidades
 7. guardar pedido
+8. si no entra por red, revisar Home y confirmar que quedó en cola pendiente
 
 ### Rutero móvil
 
@@ -212,6 +213,7 @@ Flujo típico:
 3. revisar pedidos/paradas
 4. cobrar si aplica
 5. registrar devolución si aplica
+6. si hay mala señal, volver a Home para revisar si el cobro o devolución quedó pendiente o fallido
 
 ### Bodega móvil
 
@@ -230,10 +232,33 @@ Hoy la app sí tiene base local y sesión persistida, pero todavía no se debe a
 Existe:
 
 - SQLite local
-- cache base
-- cola offline base
+- cache de tiendas
+- cache de catálogo
+- cache de clientes
+- cache de cartera
+- cache de resumen de cobranza
+- cache de rutas
+- cache de entregas
+- cola offline para pedido, cobro y devolución
+- reintento automático básico cuando vuelve internet
+- vista en Home de pendientes, fallidas y operaciones recientes
 
 Todavía falta:
 
 - sincronización completa de negocio
 - reconciliación automática por mala señal
+- operación continua 100% offline en todas las pantallas
+
+### Qué debe hacer el usuario si ve mala señal
+
+1. guardar la operación normalmente
+2. volver a `Home`
+3. revisar `Cola offline`
+4. si aparece como `pendiente`, esperar recuperación de internet
+5. si aparece como `fallida`, usar `Reintentar fallidas`
+
+### Qué hace la app cuando vuelve internet
+
+1. intenta reprocesar la cola local
+2. refresca datos críticos de la tienda activa
+3. actualiza catálogo, ruta o bodega si entra un evento realtime aplicable

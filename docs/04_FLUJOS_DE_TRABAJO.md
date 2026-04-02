@@ -223,15 +223,25 @@ Paso funcional:
 3. carga tiendas asignadas desde API y las cachea localmente
 4. conecta realtime base por Socket.IO
 5. entra al módulo móvil según rol
-6. opera preventa, cobros, devoluciones, entregas o bodega
+6. intenta trabajar online primero
+7. si falla red en captura crítica, encola pedido, cobro o devolución localmente
+8. Home deja visible cuántas operaciones siguen pendientes o fallidas
+9. cuando vuelve internet, la cola intenta reprocesarse
+10. catálogo, ruta y bodega refrescan al volver internet o por realtime de la tienda activa
 
 Persistencia local real hoy:
 
 - cache de tiendas asignadas
+- cache de catálogo
+- cache de clientes
+- cache de cartera pendiente
+- cache de resumen de cobranza
+- cache de rutas
+- cache de entregas
 - log local de eventos realtime
-- cola offline base
+- cola offline para pedido, cobro y devolución
 
 Regla importante:
 
 - hoy la app no debe describirse como offline-first completa
-- con mala señal aguanta mejor que un scaffold puro online, pero todavía no resuelve sync total de negocio
+- con mala señal aguanta mejor que una app puramente online, pero todavía no resuelve sync total de negocio ni reconciliación integral

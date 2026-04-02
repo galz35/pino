@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/app_config.dart';
+import '../../../../core/database/app_database.dart';
 import '../../../../core/database/local_cache_repository.dart';
 import '../../../../core/network/connectivity_service.dart';
 import '../../../../core/network/sync_queue_processor.dart';
@@ -57,6 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final realtimeState = ref.watch(realtimeControllerProvider);
     final pendingSyncCountAsync = ref.watch(pendingSyncCountProvider);
     final failedSyncCountAsync = ref.watch(failedSyncCountProvider);
+    final recentSyncEntriesAsync = ref.watch(recentSyncEntriesProvider);
     final latestRealtimeEventAsync = ref.watch(latestRealtimeEventProvider);
     final storesAsync = ref.watch(assignedStoresProvider);
     final session = authState.session;
@@ -154,6 +156,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               realtimeState: realtimeState,
               pendingSyncCount: pendingSyncCountAsync.asData?.value ?? 0,
               failedSyncCount: failedSyncCountAsync.asData?.value ?? 0,
+              recentSyncEntries: recentSyncEntriesAsync.asData?.value ?? const [],
               latestCachedEvent: latestRealtimeEventAsync.asData?.value,
               onRetrySync: () =>
                   ref.read(syncQueueProcessorProvider.notifier).processPendingQueue(),
@@ -730,6 +733,7 @@ class _BackendRuntimeCard extends StatelessWidget {
     required this.realtimeState,
     required this.pendingSyncCount,
     required this.failedSyncCount,
+    required this.recentSyncEntries,
     required this.latestCachedEvent,
     required this.onRetrySync,
     required this.onRetryFailed,
@@ -743,6 +747,7 @@ class _BackendRuntimeCard extends StatelessWidget {
   final RealtimeState realtimeState;
   final int pendingSyncCount;
   final int failedSyncCount;
+  final List<SyncQueueEntry> recentSyncEntries;
   final RealtimeEvent? latestCachedEvent;
   final Future<void> Function() onRetrySync;
   final Future<void> Function() onRetryFailed;
@@ -824,6 +829,23 @@ class _BackendRuntimeCard extends StatelessWidget {
               value: syncQueueState.lastError!,
             ),
           ],
+          if (recentSyncEntries.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Text(
+              'Últimas operaciones locales',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...recentSyncEntries.take(4).map(
+              (entry) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _SyncEntryTile(entry: entry),
+              ),
+            ),
+          ],
           const SizedBox(height: 14),
           Wrap(
             spacing: 10,
@@ -868,6 +890,78 @@ class _BackendRuntimeCard extends StatelessWidget {
       case SyncQueueStatus.error:
         return 'Con error';
     }
+  }
+}
+
+class _SyncEntryTile extends StatelessWidget {
+  const _SyncEntryTile({required this.entry});
+
+  final SyncQueueEntry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = switch (entry.status) {
+      'completed' => const Color(0xFF22C55E),
+      'failed' => const Color(0xFFEF4444),
+      _ => const Color(0xFFF59E0B),
+    };
+
+    final title = entry.operationType?.trim().isNotEmpty == true
+        ? entry.operationType!
+        : '${entry.method} ${entry.endpoint}';
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '${entry.method} ${entry.endpoint}',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.72),
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Estado: ${entry.status} · Intentos: ${entry.attemptCount}',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.72),
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

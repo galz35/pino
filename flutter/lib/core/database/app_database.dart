@@ -465,6 +465,13 @@ class AppDatabase extends _$AppDatabase {
         .watchSingle()
         .map((row) => row.read(failedCount) ?? 0);
   }
+
+  Stream<List<SyncQueueEntry>> watchRecentSyncEntries({int limit = 8}) {
+    return (select(syncQueueEntries)
+          ..orderBy([(table) => OrderingTerm.desc(table.createdAt)])
+          ..limit(limit))
+        .watch();
+  }
 }
 
 LazyDatabase _openConnection() {
